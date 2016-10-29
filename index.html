@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="CtrlServiceApp">
+<head>
+	<title>Shopping List Using Controller and Custom Services</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+		<script src=app.js></script>
+		<style> 
+			body {
+				font-size: 1.2em;
+			}
+			div{
+				float:left;
+				padding: 20px;
+			}
+		</style>
+</head>
+<body>
+    <div>
+     
+
+	<div ng-controller="ToBuyController as ToBuy">
+		<h2 ng-hide="ToBuy.value == 'new'">Add Items to Buy</h2>
+		<h2 ng-show="ToBuy.value == 'new'">Everything Bought</h2>
+     	<li ng-repeat="item in ToBuy.items">
+     		<ol >Buy {{item.quantity}} of {{item.name}}
+     		<button ng-click="ToBuy.boughtItem(ToBuy.items.indexOf(item))">Buy</button>
+     		</ol>
+     	</li>    
+	</div>
+ 	</div>
+
+ 	<div>
+	
+	<div ng-controller="AlreadyBoughtController as bought">
+	 <h2>Bought Items List</h2>
+		<li ng-repeat="item in bought.items">			
+			<ul>{{item[0].name}}</ul>
+			<ul>{{item[1].name}}</ul>
+			<ul>{{item[2].name}}</ul>
+			<ul>{{item[3].name}}</ul>
+			
+		</li>
+	</div>
+    		
+</body>
+
+</html>
