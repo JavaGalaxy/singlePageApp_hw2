@@ -17,7 +17,8 @@
   	toBuy.items = [{name : 'Milk', quantity : 5},
   				   {name : 'Sugar', quantity : 10},
   				   {name : 'Banana', quantity : 20},
-  				   {name : 'Coffee', quantity : 10}];
+  				   {name : 'Coffee', quantity : 10},
+  				   {name : 'Ice-Cream', quantity : 10}];
 
   	toBuy.boughtItem = function(index) {
   		
