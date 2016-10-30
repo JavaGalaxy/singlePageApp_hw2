@@ -1,47 +1,42 @@
 <!DOCTYPE html>
-<html ng-app="CtrlServiceApp">
+<html ng-app="ShoppingListCheckOff">
 <head>
-	<title>Shopping List Using Controller and Custom Services</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-		<script src=app.js></script>
-		<style> 
-			body {
-				font-size: 1.2em;
-			}
-			div{
-				float:left;
-				padding: 20px;
-			}
-		</style>
+	<title>Track Shopping List</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src=app.js></script>
+<style>
+	#firstDiv {
+		float: left;
+		padding: 20px;
+		margin-left: 250px;
+ 	}
+
+ 	button {
+ 		color: green;
+ 	}
+
+</style>
+ 
 </head>
 <body>
-    <div>
-     
-
-	<div ng-controller="ToBuyController as ToBuy">
-		<h2 ng-hide="ToBuy.value == 'new'">Add Items to Buy</h2>
-		<h2 ng-show="ToBuy.value == 'new'">Everything Bought</h2>
-     	<li ng-repeat="item in ToBuy.items">
-     		<ol >Buy {{item.quantity}} of {{item.name}}
-     		<button ng-click="ToBuy.boughtItem($index)">Buy</button>
-     		</ol>
-     	</li>    
-	</div>
- 	</div>
-
- 	<div>
+	<div ng-controller="ToBuyController as ToBuy" id="firstDiv"> <h2>&nbsp;&nbsp;   <span ng-hide="ToBuy.key == 'No'">To Buy List</span>
+	<span ng-show="ToBuy.key == 'No'">Everything Bought!</span></h2>
+		<div>
+			<li ng-repeat="item in ToBuy.items">		
+				<ol>Buy {{item.quantity}} {{item.name}}  
+					<span><button ng-click="ToBuy.addItems($index)">Bought</button></span>
+				</ol>
+			</li>
+		</div>
+	</div>	
 	
-	<div ng-controller="AlreadyBoughtController as bought">
-	 <h2>Bought Items List</h2>
-		<li ng-repeat="item in bought.items">			
-			<ul>{{item[0].name}}</ul>
-			<ul>{{item[1].name}}</ul>
-			<ul>{{item[2].name}}</ul>
-			<ul>{{item[3].name}}</ul>
-			<ul>{{item[4].name}}</ul>
-		</li>
-	</div>
-    		
-</body>
+	<div ng-controller="AlreadyBoughtController as AlBought" id="firstDiv"> <h2>Already Bought&nbsp;<span ng-hide="AlBought.key == 'No'">? Nothing Bought</span></h2>
+		<div>
+			<li ng-repeat="item in AlBought.getList()">
+					<ol> Bought {{item.quantity}} {{item.name}}</ol>
+			</li>
 
+		</div>
+	</div>		
+</body>
 </html>

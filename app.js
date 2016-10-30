@@ -1,68 +1,79 @@
-(function (){
+( function () {
 
-  angular.module('CtrlServiceApp', [])
-  	.controller('ToBuyController', ToBuyController)
-  	.controller('AlreadyBoughtController', AlreadyBoughtController)
-  	.service('ShoppingListCheckOffList', ShoppingListCheckOffList)
-  ;
+  angular.module('ShoppingListCheckOff', [])
+  .controller('ToBuyController', ToBuyController)
+  .controller('AlreadyBoughtController', AlreadyBoughtController)
+  .service('ShoppingListCheckOffService', ShoppingListCheckOffService);
 
-  ToBuyController.$inject = ['ShoppingListCheckOffList'];
+  ToBuyController.$inject = ['ShoppingListCheckOffService'];
+  function ToBuyController(ShoppingListCheckOffService) {
+  	var ToBuy = this;
+  	ToBuy.key = 'Yes';
 
-  function ToBuyController (ShoppingListCheckOffList) {
+  	ToBuy.items = [{ name : 'Milk', quantity : 5}, 
+  				   { name : 'Sugar', quantity : 10},
+  				   { name : 'Egg', quantity : 8},
+  				   { name : 'Cookies', quantity : 15},
+  				   { name : 'Ice-Cream', quantity : 7}];
 
-  	var toBuy = this;
-  	
-	toBuy.value = "";
+  	ToBuy.addItems = function(index) {
+  			ShoppingListCheckOffService.addAndRemoveItems(index, ToBuy.items);
+  			console.log("Length "+ToBuy.items.length)
+  			if(ToBuy.items.length == 0) {
+  				ToBuy.key = 'No';console.log('KEY '+ToBuy.key);
+  			}
 
-  	toBuy.items = [{name : 'Milk', quantity : 5},
-  				   {name : 'Sugar', quantity : 10},
-  				   {name : 'Banana', quantity : 20},
-  				   {name : 'Coffee', quantity : 10},
-  				   {name : 'Ice-Cream', quantity : 10}];
+  	};
 
-  	toBuy.boughtItem = function(index) {
+  };
+
+  AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
+  function AlreadyBoughtController(ShoppingListCheckOffService) {
+  	var AlBought = this;
+  	AlBought.items = [];
+  	AlBought.key = 'Yes';
+   
+
+  	AlBought.getList = function() {
+
+  		var item = ShoppingListCheckOffService.getItems();
   		
-  		ShoppingListCheckOffList.addItems(toBuy.items[index].name, toBuy.items[index].quantity);
-
-  		toBuy.items.splice(index, 1);
-  		if (toBuy.items.length == 0) {
-  			toBuy.value = 'new';
-  		};
+  		AlBought.items.push(item);
+		if (AlBought.items.length > 2) {
+			
+			AlBought.key = 'No';
+			
+		}
+  		return item;
   	};
-  };
-
-  AlreadyBoughtController.$inject = ['ShoppingListCheckOffList'];
-
-  function AlreadyBoughtController(ShoppingListCheckOffList) {
-
-  	var bought = this;
-  	bought.items = [];
-  	bought.name = "";
-	bought.quantity = "";
-	var item;
-
-	item = ShoppingListCheckOffList.readList();
-  	bought.items.push(item);
   	
   };
 
-  function ShoppingListCheckOffList() {
-  	checkList = this;
-  	checkList.items =[];
-  	var item;
-  	
-  	checkList.readList = function () {
-  		console.log('The list and index : '+checkList.items[0]);
-  		return checkList.items;
+  function ShoppingListCheckOffService() {
+  	var service = this;
+  	service.items = [];
+
+  	service.addAndRemoveItems = function(index, ToBuyItems) {
+		
+  		// Add Items to AlreadyBoughtController
+  		var item = {
+				name : ToBuyItems[index].name,
+				quantity : ToBuyItems[index].quantity
+			};
+  		
+		// console.log("The item :"+item.name);
+  		service.items.push(item);  		
+
+  		//Delete Item from ToBuyController
+		ToBuyItems.splice(index, 1);
+  		
+
+  	};
+
+  	service.getItems = function() {
+  		console.log('The items in service are  '+service.items);
+  		return service.items;
   	}
-
-  	checkList.addItems = function(name, quantity) {
-  			console.log('Inside service addItems name : '+name+" and quantity : "+quantity);
-  			item = { name : name, quantity : quantity};
-  			
-  			checkList.items.push(item);
-  			checkList.readList();
-  	};
 
   };
 
