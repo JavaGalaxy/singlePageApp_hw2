@@ -19,6 +19,9 @@
  		color: green;
  	}
 
+ 	#sad {
+ 		color: red;
+ 	}
 </style>
  
 </head>
@@ -35,8 +38,8 @@
 	</div>	
 	
 	<div ng-controller="AlreadyBoughtController as AlBought" id="firstDiv">
-	<h2><span ng-show="AlBought.key == 'No'">Already Bought&nbsp;</h2>
-	<h2><span ng-hide="AlBought.key == 'No'">Nothing Bought Yet?</span></h2>
+	<h2><span>Already Bought&nbsp;</h2>
+	<h2><span id="sad" ng-hide="AlBought.key == 'No'">Nothing Bought Yet?</span></h2>
 		<div>
 			<li ng-repeat="item in AlBought.getList()">
 					<ol> Bought {{item.quantity}} {{item.name}}</ol>
