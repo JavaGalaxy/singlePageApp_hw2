@@ -15,12 +15,16 @@
  		color: green;
  	}
 
+ 	#happy {
+ 		color: green;
+ 	}
+
 </style>
  
 </head>
 <body>
 	<div ng-controller="ToBuyController as ToBuy" id="firstDiv"> <h2>&nbsp;&nbsp;   <span ng-hide="ToBuy.key == 'No'">To Buy List</span>
-	<span ng-show="ToBuy.key == 'No'">Everything Bought!</span></h2>
+	<span id="happy" ng-show="ToBuy.key == 'No'">Everything Bought!</span></h2>
 		<div>
 			<li ng-repeat="item in ToBuy.items">		
 				<ol>Buy {{item.quantity}} {{item.name}}  
