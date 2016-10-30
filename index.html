@@ -30,7 +30,9 @@
 		</div>
 	</div>	
 	
-	<div ng-controller="AlreadyBoughtController as AlBought" id="firstDiv"> <h2>Already Bought&nbsp;<span ng-hide="AlBought.key == 'No'">? Nothing Bought</span></h2>
+	<div ng-controller="AlreadyBoughtController as AlBought" id="firstDiv">
+	<h2><span ng-show="AlBought.key == 'No'">Already Bought&nbsp;</h2>
+	<h2><span ng-hide="AlBought.key == 'No'">? Nothing Bought Yet</span></h2>
 		<div>
 			<li ng-repeat="item in AlBought.getList()">
 					<ol> Bought {{item.quantity}} {{item.name}}</ol>
